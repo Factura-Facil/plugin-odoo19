@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Inherit invoice form view -->
+    <record id="view_move_form_ff" model="ir.ui.view">
+        <field name="name">account.move.form.ff</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+
+            <!-- Add Send and Retry buttons in header -->
+            <xpath expr="//header" position="inside">
+                <button name="action_send_to_facturafacil"
+                        type="object"
+                        string="Enviar a Factura Fácil"
+                        class="btn-primary"
+                        icon="fa-paper-plane"
+                        invisible="ff_state not in ('draft', 'error', 'rejected') or move_type not in ('out_invoice', 'out_refund') or state != 'posted'"
+                        groups="facturafacil_connector.group_ff_user"/>
+                <button name="action_retry_facturafacil"
+                        type="object"
+                        string="Reintentar Envío"
+                        class="btn-warning"
+                        icon="fa-refresh"
+                        invisible="ff_state not in ('error', 'rejected') or move_type not in ('out_invoice', 'out_refund')"
+                        groups="facturafacil_connector.group_ff_user"/>
+            </xpath>
+
+            <!-- Error banner at the top of the form -->
+            <xpath expr="//div[@name='button_box']" position="before">
+                <div class="alert alert-danger" role="alert"
+                     invisible="not ff_last_error or move_type not in ('out_invoice', 'out_refund')"
+                     style="margin-bottom: 0;">
+                    <strong>Error Factura Electrónica:</strong>
+                    <field name="ff_last_error" readonly="1" nolabel="1"/>
+                </div>
+                <div class="alert alert-success" role="alert"
+                     invisible="ff_state != 'validated' or move_type not in ('out_invoice', 'out_refund')"
+                     style="margin-bottom: 0;">
+                    <strong>CUFE:</strong>
+                    <field name="ff_cufe" readonly="1" nolabel="1"/>
+                </div>
+            </xpath>
+
+            <!-- Add Factura Electrónica tab -->
+            <xpath expr="//page[@name='other_info']" position="after">
+                <page string="Factura Electrónica" name="factura_electronica"
+                      invisible="move_type not in ('out_invoice', 'out_refund')">
+                    <group>
+                        <group string="Estado FE">
+                            <field name="ff_state" readonly="1"/>
+                            <field name="ff_cufe" readonly="1"/>
+                            <field name="ff_send_date" readonly="1"/>
+                            <field name="ff_retry_count" readonly="1"/>
+                        </group>
+                        <group string="Último Error" invisible="not ff_last_error">
+                            <field name="ff_last_error" readonly="1" nolabel="1"
+                                   style="white-space: pre-wrap; color: #842029; background: #f8d7da; padding: 8px; border-radius: 4px;"/>
+                        </group>
+                    </group>
+                    <group string="Historial de Envíos">
+                        <field name="ff_log_ids" readonly="1" nolabel="1">
+                            <list decoration-danger="ff_state in ('error', 'timeout')"
+                                  decoration-success="ff_state == 'success'">
+                                <field name="send_date"/>
+                                <field name="ff_state"/>
+                                <field name="http_code"/>
+                                <field name="cufe"/>
+                                <field name="response_time_ms" string="ms"/>
+                                <field name="error_message"/>
+                            </list>
+                        </field>
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+    <!-- Add ff_state to invoice list view (inherit base view_invoice_tree) -->
+    <record id="view_move_list_ff" model="ir.ui.view">
+        <field name="name">account.move.list.ff</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_invoice_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='status_in_payment']" position="before">
+                <field name="ff_state" optional="hide" string="Estado FE"
+                       decoration-success="ff_state == 'validated'"
+                       decoration-warning="ff_state in ('sending', 'sent')"
+                       decoration-danger="ff_state in ('error', 'rejected')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Search filter for FE state -->
+    <record id="view_account_move_filter_ff" model="ir.ui.view">
+        <field name="name">account.move.search.ff</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='late']" position="after">
+                <separator/>
+                <filter name="ff_validated" string="FE Validada"
+                        domain="[('ff_state', '=', 'validated')]"/>
+                <filter name="ff_error" string="FE con Error"
+                        domain="[('ff_state', 'in', ('error', 'rejected'))]"/>
+                <filter name="ff_pending" string="FE Pendiente"
+                        domain="[('ff_state', '=', 'draft'), ('move_type', 'in', ('out_invoice', 'out_refund')), ('state', '=', 'posted')]"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

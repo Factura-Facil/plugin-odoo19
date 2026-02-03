@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Log List View -->
+    <record id="ff_log_view_list" model="ir.ui.view">
+        <field name="name">ff.log.list</field>
+        <field name="model">ff.log</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="send_date"/>
+                <field name="move_id"/>
+                <field name="ff_state"
+                       decoration-success="ff_state == 'success'"
+                       decoration-danger="ff_state in ('error', 'timeout')"/>
+                <field name="http_code"/>
+                <field name="cufe"/>
+                <field name="response_time_ms" string="Tiempo (ms)"/>
+                <field name="error_message"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Log Form View -->
+    <record id="ff_log_view_form" model="ir.ui.view">
+        <field name="name">ff.log.form</field>
+        <field name="model">ff.log</field>
+        <field name="arch" type="xml">
+            <form string="Log de Envío FE" create="0" edit="0">
+                <header>
+                    <field name="ff_state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="alert alert-danger" role="alert"
+                         invisible="not error_message">
+                        <strong>Error: </strong>
+                        <field name="error_message" nolabel="1" readonly="1"/>
+                    </div>
+                    <group>
+                        <group string="Información General">
+                            <field name="move_id"/>
+                            <field name="send_date"/>
+                            <field name="http_code"/>
+                            <field name="response_time_ms" string="Tiempo de respuesta (ms)"/>
+                        </group>
+                        <group string="Resultado">
+                            <field name="cufe" invisible="not cufe"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Request JSON" name="request">
+                            <field name="request_json" widget="text" readonly="1"
+                                   style="font-family: monospace; white-space: pre; font-size: 12px; background: #f8f9fa; padding: 12px; border-radius: 4px;"/>
+                        </page>
+                        <page string="Response JSON" name="response">
+                            <field name="response_json" widget="text" readonly="1"
+                                   style="font-family: monospace; white-space: pre; font-size: 12px; background: #f8f9fa; padding: 12px; border-radius: 4px;"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Log Search View -->
+    <record id="ff_log_view_search" model="ir.ui.view">
+        <field name="name">ff.log.search</field>
+        <field name="model">ff.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="move_id"/>
+                <field name="cufe"/>
+                <filter name="filter_success" string="Exitosos"
+                        domain="[('ff_state', '=', 'success')]"/>
+                <filter name="filter_error" string="Con Error"
+                        domain="[('ff_state', '=', 'error')]"/>
+                <filter name="filter_timeout" string="Timeout"
+                        domain="[('ff_state', '=', 'timeout')]"/>
+                <separator/>
+                <filter name="filter_today" string="Hoy"
+                        domain="[('send_date', '>=', (context_today()).strftime('%%Y-%%m-%%d'))]"/>
+                <group>
+                    <filter name="group_state" string="Estado"
+                            context="{'group_by': 'ff_state'}"/>
+                    <filter name="group_date" string="Fecha"
+                            context="{'group_by': 'send_date:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Log Action -->
+    <record id="action_ff_log" model="ir.actions.act_window">
+        <field name="name">Logs de Factura Electrónica</field>
+        <field name="res_model">ff.log</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="ff_log_view_search"/>
+        <field name="context">{'search_default_filter_today': 1}</field>
+    </record>
+
+    <!-- Menu items -->
+    <menuitem id="menu_ff_root"
+              name="Factura Electrónica"
+              parent="account.menu_finance"
+              sequence="90"/>
+
+    <menuitem id="menu_ff_logs"
+              name="Logs de Envíos"
+              parent="menu_ff_root"
+              action="action_ff_log"
+              sequence="10"
+              groups="facturafacil_connector.group_ff_admin"/>
+
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_partner_form_ff" model="ir.ui.view">
+        <field name="name">res.partner.form.ff</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='internal_notes']" position="before">
+                <page string="Facturación Electrónica (PA)" name="factura_electronica_pa">
+                    <group>
+                        <group string="Datos de Receptor">
+                            <field name="ff_receptor_type"/>
+                            <field name="ff_ruc_type"/>
+                            <field name="ff_dv"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>
