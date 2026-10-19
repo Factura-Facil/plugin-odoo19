@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ff_pos_agent.OrderReceiptFE"
+       t-inherit="point_of_sale.OrderReceipt"
+       t-inherit-mode="extension">
+
+        <!-- Odoo 19: el recibo recibe `props.order` (antes un dict `props.data`).
+             Los datos FE los expone la orden via el getter `ffFeReceipt`. -->
+        <!-- Cuando hay documento FE, ocultamos el cuerpo estandar del recibo
+             (cabecera de compañía, líneas y totales de Odoo) y renderizamos el
+             CAFE completo. -->
+        <xpath expr="//ReceiptHeader" position="attributes">
+            <attribute name="t-if">!props.order.ffFeReceipt.doc</attribute>
+        </xpath>
+        <xpath expr="//OrderDisplay" position="attributes">
+            <attribute name="t-if">props.order.lines?.length and !props.order.ffFeReceipt.doc</attribute>
+        </xpath>
+        <xpath expr="//t[@t-if='!props.basic_receipt']" position="attributes">
+            <attribute name="t-if">!props.basic_receipt and !props.order.ffFeReceipt.doc</attribute>
+        </xpath>
+
+        <!-- Cuerpo CAFE -->
+        <xpath expr="//ReceiptHeader" position="before">
+            <div t-if="props.order.ffFeReceipt.doc" class="ff-cafe" style="font-size:12px; line-height:1.25;">
+                <t t-set="d" t-value="props.order.ffFeReceipt.doc"/>
+                <!-- Emisor -->
+                <div class="text-center">
+                    <div style="font-weight:bold;">DGI</div>
+                    <div>RUC: <t t-esc="d.emisor.ruc"/> DV <t t-esc="d.emisor.dv"/></div>
+                    <div t-if="d.emisor.nombre"><t t-esc="d.emisor.nombre"/></div>
+                    <div t-if="d.emisor.dir"><t t-esc="d.emisor.dir"/></div>
+                    <div t-if="d.emisor.tel"><t t-esc="d.emisor.tel"/></div>
+                    <div style="font-weight:bold; margin-top:2px;"><t t-esc="d.titulo or 'COMPROBANTE AUXILIAR DE FACTURA ELECTRÓNICA'"/></div>
+                    <div><t t-esc="d.subtitulo or 'Factura de Operación Interna'"/></div>
+                </div>
+                <!-- Datos del documento -->
+                <div style="margin-top:3px;">
+                    <div># <t t-esc="d.nro"/></div>
+                    <div t-if="d.fecha">FECHA: <t t-esc="d.fecha"/></div>
+                    <div>SUCURSAL: <t t-esc="d.emisor.sucursal"/></div>
+                    <div>CAJA/PTO FACT: <t t-esc="d.pos"/></div>
+                    <t t-if="d.referred and d.referred.fd_number">
+                        <div>DOC. AFECTADO: <t t-esc="d.referred.fd_number"/></div>
+                        <div t-if="d.referred.fd_date">FECHA DOC. AFECTADO: <t t-esc="d.referred.fd_date"/></div>
+                    </t>
+                </div>
+                <div class="text-center">--------------------------------</div>
+                <div>RECEPTOR: <t t-esc="d.receptor.tipo === '02' ? 'Consumidor final' : (d.receptor.tipo === '01' ? 'Contribuyente' : (d.receptor.tipo === '03' ? 'Gobierno' : 'Extranjero'))"/></div>
+                <div>CLIENTE: <t t-esc="d.receptor.nombre"/><t t-if="d.receptor.ruc"> - RUC <t t-esc="d.receptor.ruc"/></t></div>
+                <div t-if="d.ambiente === '2'" class="text-center" style="font-weight:bold; font-size:10px;">*** AMBIENTE DE PRUEBAS - SIN VALOR FISCAL ***</div>
+                <!-- Items -->
+                <div class="text-center">--------------------------------</div>
+                <div style="display:flex; justify-content:space-between; font-weight:bold;">
+                    <span>DESCRIPCIÓN</span><span>MONTO</span>
+                </div>
+                <div class="text-center">--------------------------------</div>
+                <t t-foreach="d.items" t-as="it" t-key="it_index">
+                    <div><t t-esc="it.desc"/></div>
+                    <div style="display:flex; justify-content:space-between;">
+                        <span><t t-esc="it.qty_x_price"/></span><span><t t-esc="it.gross"/></span>
+                    </div>
+                    <div t-if="it.has_desc" style="display:flex; justify-content:space-between;">
+                        <span><t t-esc="it.desc_line"/></span><span><t t-esc="it.desc_total"/></span>
+                    </div>
+                </t>
+                <!-- Totales -->
+                <div class="text-center">--------------------------------</div>
+                <div style="display:flex; justify-content:space-between;">
+                    <span>SUBTOTAL</span><span><t t-esc="d.tot.subtotal"/></span>
+                </div>
+                <div t-if="d.tot.has_dscto" style="display:flex; justify-content:space-between;">
+                    <span>TOT. DSCTO.</span><span><t t-esc="d.tot.dscto"/></span>
+                </div>
+                <div t-foreach="d.tot.itbms" t-as="tx" t-key="tx_index" style="display:flex; justify-content:space-between;">
+                    <span>ITBMS <t t-esc="tx.tasa"/>%</span><span><t t-esc="tx.val"/></span>
+                </div>
+                <div style="display:flex; justify-content:space-between; font-weight:bold;">
+                    <span>TOTAL</span><span><t t-esc="d.tot.total"/></span>
+                </div>
+                <!-- Pagos -->
+                <div class="text-center">--------------------------------</div>
+                <div t-foreach="d.pagos" t-as="pg" t-key="pg_index" style="display:flex; justify-content:space-between;">
+                    <span><t t-esc="pg.forma"/></span><span><t t-esc="pg.monto"/></span>
+                </div>
+                <div t-if="d.vuelto" style="display:flex; justify-content:space-between;">
+                    <span>VUELTO</span><span><t t-esc="d.vuelto"/></span>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- Pie fiscal: estado + CUFE + QR + consulta + info adicional + PAC -->
+        <xpath expr="//div[hasclass('after-footer')]" position="before">
+            <t t-if="props.order.ffFeReceipt.enabled">
+                <t t-set="fe" t-value="props.order.ffFeReceipt"/>
+                <div class="ff-cafe-foot" style="font-size:11px; line-height:1.25; margin-top:4px;">
+                    <div class="text-center">--------------------------------</div>
+                    <t t-if="fe.estado === 'autorizada'">
+                        <div style="font-size:10px;">Protocolo de autorización: <t t-esc="fe.protocolo or 'en proceso'"/></div>
+                    </t>
+                    <t t-elif="fe.estado === 'timbrada'">
+                        <div style="font-size:10px;">CAFE de emisión previa. Transmisión a la DGI pendiente de confirmación.</div>
+                    </t>
+                    <t t-elif="fe.estado === 'rechazada'">
+                        <div class="text-center" style="font-weight:bold;">*** RECHAZADO POR LA DGI ***</div>
+                        <div style="font-size:9px; word-break:break-word;"><t t-esc="fe.error or ''"/></div>
+                    </t>
+                    <t t-else="">
+                        <div class="text-center" style="font-size:10px;">*** Documento pendiente de timbrar ***</div>
+                    </t>
+                    <t t-if="fe.cufe">
+                        <div style="font-size:9px; word-break:break-all; margin-top:2px;">
+                            Consulte en <t t-esc="fe.qr_url or 'https://dgi-fep.mef.gob.pa'"/> usando el CUFE:
+                        </div>
+                        <div style="font-size:9px; word-break:break-all;"><t t-esc="fe.cufe"/></div>
+                        <div style="font-size:9px;">O escaneando el código QR</div>
+                        <div class="text-center" style="margin-top:3px;">
+                            <img t-if="fe.qr_base64"
+                                 t-att-src="'data:image/png;base64,' + fe.qr_base64"
+                                 style="width:135px; height:135px;"/>
+                        </div>
+                    </t>
+                    <div class="text-center" style="font-size:10px; margin-top:3px;">Información adicional</div>
+                    <div t-if="fe.doc" style="font-size:9px; word-break:break-all;">SystemRef: <t t-esc="fe.doc.systemref"/></div>
+                    <div t-if="fe.confirmacion" style="font-size:9px; word-break:break-all;">ConfirmationNbr: <t t-esc="fe.confirmacion"/></div>
+                    <div class="text-center" style="font-size:9px; margin-top:4px; border-top:1px dotted #000; padding-top:3px;">
+                        Documento validado por Factura Fácil S.A. con RUC 155723374-2-2022,
+                        es Proveedor Autorizado Calificado, Resolución No. 201-2167 de 14/03/2023.
+                    </div>
+                </div>
+            </t>
+        </xpath>
+    </t>
+
+</templates>

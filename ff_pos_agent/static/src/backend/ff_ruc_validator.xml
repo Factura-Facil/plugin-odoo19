@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+    <t t-name="ff_pos_agent.FfRucValidator">
+        <div class="o_ff_ruc_validator w-100">
+            <button type="button" class="btn btn-primary"
+                    t-att-disabled="!ruc || state.loading"
+                    t-on-click="onValidate">
+                <i class="fa fa-fw fa-check-circle me-1" role="img" aria-hidden="true"/>
+                <t t-if="state.loading">Consultando la DGI...</t>
+                <t t-else="">Validar RUC con la DGI</t>
+            </button>
+            <div t-if="state.result" role="alert"
+                 t-attf-class="alert py-2 px-3 mt-2 mb-0 {{ state.result.ok ? 'alert-success' : 'alert-danger' }}">
+                <t t-esc="state.result.message"/>
+            </div>
+        </div>
+    </t>
+
+</templates>

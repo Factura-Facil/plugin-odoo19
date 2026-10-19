@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Forma de pago DGI por método de pago del POS -->
+    <record id="pos_payment_method_view_form_ff" model="ir.ui.view">
+        <field name="name">pos.payment.method.form.inherit.ff</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_form"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="ff_payment_type"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="pos_payment_method_view_tree_ff" model="ir.ui.view">
+        <field name="name">pos.payment.method.list.inherit.ff</field>
+        <field name="model">pos.payment.method</field>
+        <field name="inherit_id" ref="point_of_sale.pos_payment_method_view_tree"/>
+        <field name="arch" type="xml">
+            <field name="journal_id" position="after">
+                <field name="ff_payment_type" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Código DGI de la unidad de medida.
+         En Odoo 19 la vista de uom.uom ya no muestra `rounding` (pasó a ser un
+         calculado global) y la vista de categorías desapareció: el anclaje es
+         `relative_uom_id`, y el listado de unidades reemplaza al de la categoría. -->
+    <record id="product_uom_form_view_ff" model="ir.ui.view">
+        <field name="name">uom.uom.form.inherit.ff</field>
+        <field name="model">uom.uom</field>
+        <field name="inherit_id" ref="uom.product_uom_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='relative_factor']" position="after">
+                <field name="ff_dgi_code" placeholder="und"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="product_uom_tree_view_ff" model="ir.ui.view">
+        <field name="name">uom.uom.list.inherit.ff</field>
+        <field name="model">uom.uom</field>
+        <field name="inherit_id" ref="uom.product_uom_tree_view"/>
+        <field name="arch" type="xml">
+            <field name="relative_uom_id" position="after">
+                <field name="ff_dgi_code" placeholder="und" optional="show"/>
+            </field>
+        </field>
+    </record>
+</odoo>
