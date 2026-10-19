@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_move_form_ff" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.ff</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <!-- Estado FE SIEMPRE visible en la cabecera, y la acción que
+                 toque según el estado. Antes el botón desaparecía en cuanto se
+                 emitía y el estado quedaba escondido en una pestaña: quien
+                 facturaba no sabía si la DGI lo había aceptado sin ir a
+                 buscarlo. -->
+            <xpath expr="//header" position="inside">
+                <field name="ff_puede_firmar" invisible="1"/>
+                <field name="ff_fe_aplica" invisible="1"/>
+                <field name="fe_document_id" invisible="1"/>
+                <field name="ff_desde_pos" invisible="1"/>
+
+                <!-- Aún sin emitir -->
+                <button name="action_ff_firmar" type="object"
+                        string="Emitir FE" class="btn-primary"
+                        invisible="not ff_puede_firmar"/>
+
+                <!-- Confirmada pero la compañía no tiene FE: se dice por qué
+                     no hay botón, en vez de dejar un hueco sin explicación. -->
+                <span class="text-muted ms-2"
+                      invisible="ff_fe_aplica or state != 'posted' or move_type not in ('out_invoice', 'out_refund')">
+                    <i class="fa fa-info-circle me-1"/>Factura Fácil no está activo para esta compañía
+                </span>
+
+                <!-- Ya hay documento FE: el estado, y la acción que corresponda -->
+                <field name="fe_estado" widget="badge" invisible="not fe_document_id"
+                       decoration-success="fe_estado == 'autorizada'"
+                       decoration-info="fe_estado == 'timbrada'"
+                       decoration-warning="fe_estado in ('pendiente','incierta')"
+                       decoration-danger="fe_estado in ('rechazada','error')"/>
+
+                <!-- Pendiente o error: reintentar es seguro -->
+                <button name="action_ff_retimbrar" type="object"
+                        string="Reintentar FE" class="btn-warning"
+                        invisible="ff_desde_pos or fe_estado not in ('pendiente','error')"/>
+
+                <!-- Rechazada por la DGI: el documento rechazado no vale, hace
+                     falta uno NUEVO. Se avisa de que se emite otro. -->
+                <button name="action_ff_retimbrar" type="object"
+                        string="Reemitir FE" class="btn-danger"
+                        invisible="ff_desde_pos or fe_estado != 'rechazada'"
+                        confirm="La DGI rechazó este documento, así que no tiene validez y hay que emitir uno nuevo. El anterior queda en la auditoría. ¿Continuar?"/>
+
+                <!-- Timbrada: firmada pero sin respuesta del PAC todavía -->
+                <button name="action_ff_retimbrar" type="object"
+                        string="Actualizar estado DGI" class="btn-secondary"
+                        invisible="ff_desde_pos or fe_estado != 'timbrada'"/>
+
+                <!-- Incierta: reenviar podría duplicar la factura ante la DGI.
+                     No se ofrece reintento: lo resuelve un responsable desde la
+                     pestaña, vinculando el documento que encontró en el agente. -->
+                <span class="text-muted ms-2" invisible="not ff_desde_pos or not fe_document_id">
+                    <i class="fa fa-shopping-cart me-1"/>Emitida desde el Punto de Venta
+                </span>
+
+                <span class="text-danger fw-bold ms-2" invisible="ff_desde_pos or fe_estado != 'incierta'">
+                    <i class="fa fa-exclamation-triangle me-1"/>Envío sin confirmar — no reintentes, revisa la pestaña Factura Electrónica
+                </span>
+            </xpath>
+
+            <!-- El motivo del fallo, donde se ve: encima de la factura. -->
+            <xpath expr="//sheet" position="before">
+                <div class="alert alert-danger mb-0" role="alert"
+                     invisible="fe_estado not in ('rechazada','error') or not fe_error">
+                    <b>Factura electrónica: <field name="fe_estado" readonly="1" nolabel="1" class="d-inline"/></b>
+                    <div><field name="fe_error" readonly="1" nolabel="1"/></div>
+                </div>
+                <div class="alert alert-warning mb-0" role="alert"
+                     invisible="fe_estado != 'pendiente' or not fe_error">
+                    <b>Factura electrónica pendiente de emitir</b>
+                    <div><field name="fe_error" readonly="1" nolabel="1"/></div>
+                </div>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Factura Electrónica" name="ff_fe"
+                      invisible="not fe_document_id">
+                    <field name="fe_document_id" invisible="1"/>
+                    <field name="fe_cafe_pdf_id" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="fe_estado" readonly="1" widget="badge"
+                                   decoration-success="fe_estado == 'autorizada'"
+                                   decoration-info="fe_estado == 'timbrada'"
+                                   decoration-warning="fe_estado in ('pendiente','incierta')"
+                                   decoration-danger="fe_estado in ('rechazada','error')"/>
+                            <field name="fe_cufe" readonly="1"/>
+                            <field name="fe_nro_dgi" readonly="1"/>
+                            <field name="fe_protocolo" readonly="1"/>
+                            <field name="fe_confirmacion" readonly="1"/>
+                            <!-- Editable solo en 'incierta': el responsable
+                                 vincula el documento que encontro en el agente,
+                                 y Reintentar lo retoma sin volver a emitir. -->
+                            <field name="fe_document_uuid" readonly="fe_estado != 'incierta'"
+                                   groups="account.group_account_manager"/>
+                        </group>
+                        <group>
+                            <field name="fe_qr_url" readonly="1" widget="url"
+                                   invisible="not fe_qr_url"/>
+                            <field name="fe_error" readonly="1"
+                                   invisible="fe_estado not in ('rechazada','error','pendiente','incierta')"/>
+                            <button name="action_ff_retimbrar" type="object"
+                                    string="Reintentar / actualizar FE" class="btn-primary"
+                                    invisible="fe_estado == 'autorizada' or (fe_estado == 'incierta' and not fe_document_uuid)"/>
+                            <button name="action_ff_ver_cafe" type="object"
+                                    string="Ver CAFE oficial" icon="fa-file-pdf-o" class="btn-secondary"
+                                    invisible="not fe_cafe_pdf_id and not fe_cufe"/>
+                            <button name="action_ff_forzar_reenvio" type="object"
+                                    string="Forzar reenvío" class="btn-danger"
+                                    groups="account.group_account_manager"
+                                    invisible="fe_estado != 'incierta' or fe_document_uuid"
+                                    confirm="Esto emite un documento NUEVO en la DGI. Hazlo solo si verificaste en el agente que el documento de esta factura NO existe; si existe, quedará la factura duplicada. ¿Continuar?"/>
+                        </group>
+                    </group>
+                </page>
+                <!-- Auditoría: el payload exacto que salió hacia el agente, se
+                     haya firmado o no, más la respuesta cruda. -->
+                <page string="Auditoría FE" name="ff_audit"
+                      invisible="not fe_request_json and not fe_response_json">
+                    <group>
+                        <field name="fe_request_date" readonly="1"/>
+                        <field name="fe_impreso" readonly="1"/>
+                    </group>
+                    <group string="Payload enviado al agente">
+                        <field name="fe_request_json" nolabel="1" readonly="1"
+                               widget="ace" options="{'mode': 'json'}"/>
+                    </group>
+                    <group string="Respuesta del agente">
+                        <field name="fe_response_json" nolabel="1" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

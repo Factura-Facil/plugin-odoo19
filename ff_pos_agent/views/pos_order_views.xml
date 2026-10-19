@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pos_order_form_ff" model="ir.ui.view">
+        <field name="name">pos.order.form.inherit.ff</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+        <field name="arch" type="xml">
+            <!-- Boton para firmar/emitir la FE desde el backend. Va en la
+                 cabecera (fuera del panel FE, que se oculta si aun no hay
+                 documento) y solo aparece cuando la orden se puede firmar. -->
+            <xpath expr="//header" position="inside">
+                <field name="ff_puede_firmar" invisible="1"/>
+                <button name="action_ff_firmar" type="object"
+                        string="Firmar / Emitir FE" class="btn-primary"
+                        invisible="not ff_puede_firmar"/>
+            </xpath>
+            <xpath expr="//sheet/group" position="after">
+                <group string="Factura Electrónica (Factura Fácil)" invisible="not fe_document_id">
+                    <field name="fe_document_id" invisible="1"/>
+                    <field name="fe_cafe_pdf_id" invisible="1"/>
+                    <field name="fe_online" invisible="1"/>
+                    <group>
+                        <field name="fe_estado" readonly="1" widget="badge"
+                                decoration-success="fe_estado == 'autorizada'"
+                                decoration-info="fe_estado == 'timbrada'"
+                                decoration-warning="fe_estado in ('pendiente','incierta')"
+                                decoration-danger="fe_estado in ('rechazada','error')"/>
+                        <field name="fe_cufe" readonly="1"/>
+                        <field name="fe_nro_dgi" readonly="1"/>
+                        <field name="fe_protocolo" readonly="1"/>
+                        <field name="fe_confirmacion" readonly="1"/>
+                        <!-- Editable solo en 'incierta': el supervisor vincula el
+                             documento que encontro en el agente, y Reintentar lo
+                             retoma sin volver a emitir. -->
+                        <field name="fe_document_uuid" readonly="fe_estado != 'incierta'"
+                               groups="point_of_sale.group_pos_manager"/>
+                    </group>
+                    <group>
+                        <field name="fe_qr_url" readonly="1" widget="url"
+                               invisible="not fe_qr_url"/>
+                        <field name="fe_error" readonly="1"
+                               invisible="fe_estado not in ('rechazada','error','pendiente','incierta')"/>
+                        <button name="action_ff_retimbrar" type="object"
+                                string="Reintentar / actualizar FE" class="btn-primary"
+                                invisible="fe_estado == 'autorizada' or (fe_estado == 'incierta' and not fe_document_uuid)"/>
+                        <button name="action_ff_ver_cafe" type="object"
+                                string="Ver CAFE oficial" icon="fa-file-pdf-o" class="btn-secondary"
+                                invisible="not fe_cafe_pdf_id and not (fe_online and fe_cufe)"/>
+                        <button name="action_ff_forzar_reenvio" type="object"
+                                string="Forzar reenvío" class="btn-danger"
+                                groups="point_of_sale.group_pos_manager"
+                                invisible="fe_estado != 'incierta' or fe_document_uuid"
+                                confirm="Esto emite un documento NUEVO en la DGI. Hazlo solo si verificaste en el agente que el documento de esta orden NO existe; si existe, quedara la factura duplicada. ¿Continuar?"/>
+                    </group>
+                </group>
+            </xpath>
+            <!-- Auditoría: el payload exacto que salió hacia el agente, se
+                 haya firmado o no, más la respuesta cruda. -->
+            <xpath expr="//notebook" position="inside">
+                <page string="Auditoría FE" name="ff_audit"
+                      invisible="not fe_request_json and not fe_response_json">
+                    <group>
+                        <field name="fe_request_date" readonly="1"/>
+                        <field name="fe_impreso" readonly="1"/>
+                    </group>
+                    <group string="Payload enviado al agente">
+                        <field name="fe_request_json" nolabel="1" readonly="1"
+                               widget="ace" options="{'mode': 'json'}"/>
+                    </group>
+                    <group string="Respuesta del agente">
+                        <field name="fe_response_json" nolabel="1" readonly="1"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_pos_order_tree_ff" model="ir.ui.view">
+        <field name="name">pos.order.tree.inherit.ff</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="fe_estado" optional="show" widget="badge"
+                        decoration-success="fe_estado == 'autorizada'"
+                        decoration-info="fe_estado == 'timbrada'"
+                        decoration-warning="fe_estado in ('pendiente','incierta')"
+                        decoration-danger="fe_estado in ('rechazada','error')"/>
+                <field name="fe_cufe" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="view_pos_order_search_ff" model="ir.ui.view">
+        <field name="name">pos.order.search.inherit.ff</field>
+        <field name="model">pos.order</field>
+        <field name="inherit_id" ref="point_of_sale.view_pos_order_filter"/>
+        <field name="arch" type="xml">
+            <filter name="order_date" position="before">
+                <separator/>
+                <filter name="ff_rechazada" string="FE Rechazada / Error / Incierta"
+                        domain="[('fe_estado','in',('rechazada','error','incierta'))]"/>
+                <filter name="ff_pendiente_pac" string="FE Pendiente autorización"
+                        domain="[('fe_estado','in',('pendiente','timbrada'))]"/>
+                <filter name="ff_autorizada" string="FE Autorizada"
+                        domain="[('fe_estado','=','autorizada')]"/>
+                <separator/>
+                <group expand="0" string="Agrupaciones FE">
+                    <filter name="group_fe_estado" string="Estado FE"
+                            context="{'group_by': 'fe_estado'}"/>
+                </group>
+            </filter>
+        </field>
+    </record>
+
+    <record id="action_pos_order_fe_monitor" model="ir.actions.act_window">
+        <field name="name">Monitor Factura Electrónica</field>
+        <field name="res_model">pos.order</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('fe_estado','!=',False)]</field>
+        <field name="context">{'search_default_ff_rechazada': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Aquí ves el estado FE de las órdenes POS</p>
+            <p>Filtra por rechazadas, pendientes de autorización o autorizadas por la DGI.</p>
+        </field>
+    </record>
+
+    <menuitem id="menu_pos_order_fe_monitor"
+              name="Monitor Factura Electrónica"
+              parent="point_of_sale.menu_point_rep"
+              action="action_pos_order_fe_monitor"
+              sequence="90"/>
+</odoo>

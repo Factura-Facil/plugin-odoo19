@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_form_ff" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.ff</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page string="Factura Electrónica (Panamá)" name="ff_fe">
+                    <group>
+                        <group string="Identificación DGI">
+                            <field name="ff_ruc"
+                                   placeholder="8-123-456 / 155646463-2-2017 / 8-NT-1-26"/>
+                            <field name="ff_ruc_hint" invisible="not ff_ruc"/>
+                            <field name="ff_receptor_type"/>
+                            <field name="ff_ruc_type"
+                                   invisible="ff_receptor_type == '02'"/>
+                            <field name="ff_location_code"
+                                   invisible="ff_receptor_type == '02'"/>
+                        </group>
+                        <group string="Validación con la DGI">
+                            <field name="ff_razon_social" readonly="1"/>
+                            <field name="ff_dv"/>
+                            <field name="ff_ruc_validated" readonly="1"/>
+                            <widget name="ff_ruc_validator" colspan="2"
+                                    invisible="not ff_ruc"/>
+                        </group>
+                    </group>
+                    <div class="text-muted">
+                        Sin RUC el cliente se factura como <b>consumidor final</b>. Al escribir
+                        el RUC se deduce el tipo por su estructura (cédula = natural,
+                        folio/ficha = jurídica, <b>NT</b> = gobierno); el DV y la razón social
+                        los confirma la DGI al validar.
+                    </div>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

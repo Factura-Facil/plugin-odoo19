@@ -1,0 +1,96 @@
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan" style="color:#040C23;">Factura electrónica DGI Panamá en el Punto de Venta</h2>
+        <h3 class="oe_slogan">Odoo 18 POS con Factura Fácil: por el Agente Offline de la tienda o por su API en línea</h3>
+        <p class="oe_mt32 text-center">
+            Cada venta que se cobra en la caja se firma, se envía a la DGI y vuelve con
+            <b>CUFE y QR oficial</b>, que se imprimen en el recibo como <b>CAFE</b>.
+            El cajero no hace nada distinto, y una caída del agente <b>nunca bloquea la venta</b>.
+        </p>
+        <div class="oe_demo oe_picture oe_screenshot text-center">
+            <img src="screenshot_recibo.png" alt="Recibo con CAFE, CUFE y QR oficial de la DGI" style="max-width:100%;"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Qué resuelve</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul>
+                    <li><b>Timbrado automático</b> al validar el pago, y el CAFE en el recibo con los 13 elementos exigidos por la DGI.</li>
+                    <li><b>Notas de crédito</b>: las devoluciones se emiten como NTC referenciando la factura original.</li>
+                    <li><b>Clientes con RUC</b>: validación contra la DGI desde la ficha del cliente, sin salir del POS.</li>
+                    <li><b>Facturas a Gobierno</b> con código CPBS (GNS) por artículo.</li>
+                    <li><b>Descuentos globales, premios y precios con ITBMS incluido</b>: lo emitido cuadra con lo cobrado.</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li><b>Sin facturas duplicadas</b>: nunca reenvía una venta que el agente pudo haber recibido.</li>
+                    <li><b>Tolerante a fallos</b>: si el agente no responde, la venta queda pendiente y se emite sola.</li>
+                    <li><b>Monitor</b> de facturas por estado (pendiente, incierta, timbrada, autorizada, rechazada).</li>
+                    <li><b>Auditoría completa</b>: el payload enviado y la respuesta del agente quedan en cada orden.</li>
+                    <li><b>Formas de pago y unidades DGI</b> configurables, incluidas las ventas a crédito.</li>
+                    <li><b>Dos modos</b>: Agente Offline (emite sin internet) o API en línea (autoriza al momento y adjunta el PDF oficial del CAFE).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Monitor de Factura Electrónica</h2>
+        <p class="text-center">Todas las ventas con su estado fiscal, con filtros listos para lo que necesita atención.</p>
+        <div class="oe_demo oe_picture oe_screenshot text-center">
+            <img src="screenshot_monitor.png" alt="Monitor de Factura Electrónica" style="max-width:100%;"/>
+        </div>
+        <h2 class="oe_slogan oe_mt32">Cada orden con su documento fiscal</h2>
+        <p class="text-center">CUFE, número fiscal, protocolo de autorización, QR oficial y la auditoría del envío.</p>
+        <div class="oe_demo oe_picture oe_screenshot text-center">
+            <img src="screenshot_orden.png" alt="Orden con su factura electrónica" style="max-width:100%;"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Configuración en minutos</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ol>
+                    <li>Instala el módulo y, en los ajustes del POS, activa <b>Agente Factura Fácil</b>.</li>
+                    <li>Carga la URL del agente, el <b>Company UUID</b> y la <b>API Key</b> que te da Factura Fácil.</li>
+                    <li>Pulsa <b>Probar conexión</b>: la prueba se hace desde el servidor de Odoo, que es quien habla con el agente.</li>
+                    <li>Revisa la <b>forma de pago DGI</b> de cada método de pago.</li>
+                </ol>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="screenshot_ajustes.png" alt="Ajustes del agente en el POS" style="max-width:100%;"/>
+            </div>
+        </div>
+        <div class="oe_demo oe_picture oe_screenshot text-center oe_mt32">
+            <img src="screenshot_formas_pago.png" alt="Forma de pago DGI por método de pago" style="max-width:100%;"/>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <h2 class="oe_slogan">Seguridad</h2>
+        <ul>
+            <li>La <b>API Key</b> y el <b>Company UUID</b> solo los ve un responsable del POS y <b>nunca</b> se cargan en el navegador de la caja.</li>
+            <li>El estado fiscal no se puede editar a mano: lo escribe únicamente el flujo de emisión.</li>
+            <li>La auditoría enmascara la API Key: se puede compartir con soporte.</li>
+        </ul>
+        <h2 class="oe_slogan oe_mt32">Requisitos</h2>
+        <ul>
+            <li>Odoo 18 con <b>Punto de Venta</b>.</li>
+            <li><b>Agente Offline de Factura Fácil</b> instalado y sincronizado, alcanzable desde el servidor de Odoo.</li>
+            <li>Credenciales de Factura Fácil (Company UUID y API Key).</li>
+            <li>Opcional: la librería Python <code>qrcode</code> para imprimir la imagen del QR en el recibo.</li>
+        </ul>
+    </div>
+</section>

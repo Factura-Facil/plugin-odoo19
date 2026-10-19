@@ -1,0 +1,1286 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* ff_pos_agent
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0-20260908\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-09-24 00:22+0000\n"
+"PO-Revision-Date: 2026-09-24 00:22+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid " (afiliado a FE)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "%(name)s - DV %(dv)s%(afil)s"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_config.py:0
+msgid ""
+"%(quien)s no responde en %(url)s (%(d)s). La URL debe ser alcanzable desde "
+"el servidor de Odoo, no desde tu PC."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_config.py:0
+msgid "%(quien)s responde en %(url)s."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_order.py:0
+msgid ""
+"'%(linea)s' tiene un impuesto de %(pct)s%%, que no es una tasa de ITBMS (7, "
+"10 o 15%%). Corrige el impuesto del producto."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "*** AMBIENTE DE PRUEBAS - SIN VALOR FISCAL ***"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "*** Documento pendiente de timbrar ***"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "*** RECHAZADO POR LA DGI ***"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "- RUC"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_partner_form_ff
+msgid "8-123-456 / 155646463-2-2017 / 8-NT-1-26"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_api_key
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_api_key
+msgid "API Key (X-FF-API-Key)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_config__ff_mode__online
+msgid "API en línea"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_api_key
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_api_key
+msgid ""
+"API key de 128 caracteres. Se envía como header, del lado del servidor: no "
+"se carga en el navegador de la caja y solo la ve un responsable del Punto de"
+" Venta."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_config.py:0
+msgid "Agente Factura Fácil"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_config__ff_mode__agent
+msgid "Agente offline"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_base_url
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_base_url
+msgid ""
+"Agente offline: URL del agente, alcanzable desde el servidor de Odoo (p. ej."
+" http://localhost:8080, o http://host.docker.internal:8080 desde un "
+"contenedor). API en línea: URL de la API de Factura Fácil (QA: "
+"https://backend-qa-api.facturafacil.com.pa)."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_mode
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_mode
+msgid ""
+"Agente offline: la factura se firma en el agente de la tienda, que sigue "
+"emitiendo sin internet e imprime el CAFE en su impresora. API en línea: la "
+"factura va directo a Factura Fácil por internet y se autoriza al momento; el"
+" CAFE se imprime con el recibo de Odoo y el PDF oficial queda adjunto a la "
+"orden. OJO: los dos modos comparten la numeración del punto de venta en "
+"Factura Fácil; no uses el mismo código POS en los dos modos a la vez."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_search_ff
+msgid "Agrupaciones FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_environment
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_environment
+msgid "Ambiente FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.actions.act_window,help:ff_pos_agent.action_pos_order_fe_monitor
+msgid "Aquí ves el estado FE de las órdenes POS"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid "Auditoría FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__ff_fe_document__fe_estado__autorizada
+msgid "Autorizada DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid ""
+"CAFE de emisión previa. Transmisión a la DGI pendiente de confirmación."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_impreso
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_impreso
+msgid "CAFE impreso por el agente"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_cafe_pdf_id
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_cafe_pdf_id
+msgid "CAFE oficial (PDF)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "CAJA/PTO FACT:"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "CLIENTE:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_cufe
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_cufe
+msgid "CUFE"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "CUFE:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__09
+msgid "Cheque"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_ruc_hint
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_ruc_hint
+msgid "Clasificación"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__company_id
+msgid "Company"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_company_uuid
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_company_uuid
+msgid "Company UUID (X-FF-Company)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "ConfirmationNbr:"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/backend/ff_ruc_validator.xml:0
+msgid "Consultando la DGI..."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "Consulte en"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__res_partner__ff_receptor_type__02
+msgid "Consumidor final"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__res_partner__ff_receptor_type__01
+msgid "Contribuyente"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__01
+msgid "Crédito (a plazo)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_uom_uom__ff_dgi_code
+msgid "Código DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_product_product__ff_gns_code
+#: model:ir.model.fields,field_description:ff_pos_agent.field_product_template__ff_gns_code
+msgid "Código GNS (CPBS)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_codigo_gns
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_codigo_gns
+msgid "Código GNS por defecto (CPBS)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_pos_code
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_pos_code
+msgid "Código POS"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_codigo_gns
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_codigo_gns
+msgid ""
+"Código de la Codificación Panameña de Bienes y Servicios que se usa cuando "
+"el receptor es Gobierno (tipo 03) y el artículo no tiene el suyo propio. La "
+"DGI rechaza la factura a gobierno si el item no lleva gns. Máximo 4 "
+"caracteres."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_product_product__ff_gns_code
+#: model:ir.model.fields,help:ff_pos_agent.field_product_template__ff_gns_code
+msgid ""
+"Código del artículo en la Codificación Panameña de Bienes y Servicios. "
+"Obligatorio en facturas a Gobierno (receptor tipo 03); si se deja vacío se "
+"usa el código por defecto del punto de venta."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_res_partner__ff_location_code
+#: model:ir.model.fields,help:ff_pos_agent.field_res_users__ff_location_code
+msgid "Código provincia-distrito-corregimiento, ej. 8-8-7"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_branch_code
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_branch_code
+msgid "Código sucursal"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_location_code
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_location_code
+msgid "Código ubicación"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_payment_method__ff_payment_type
+msgid ""
+"Cómo se informa este método a la DGI en la factura electrónica. Se propone a"
+" partir del tipo y del nombre del método; revísalo. 'Otro' viaja con el "
+"nombre del método como descripción."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "DESCRIPCIÓN"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "DOC. AFECTADO:"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_dv
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_dv
+msgid "DV"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_doc_json
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_doc_json
+msgid "Datos CAFE (JSON)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_environment
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_environment
+msgid ""
+"Debe coincidir con el modo del agente (IS_TEST). 1=Producción (documento "
+"fiscal real), 2=Pruebas."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_product_template_form_ff
+msgid "Default del POS si se deja vacío"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_error
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_error
+msgid "Detalle error / mensajes DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_res_partner__ff_dv
+#: model:ir.model.fields,help:ff_pos_agent.field_res_users__ff_dv
+msgid "Digito verificador del RUC (validado con la DGI)."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_document_id
+msgid "Documento FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_ff_fe_document
+msgid "Documento FE (Factura Fácil)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Documento creado en Factura Fácil; recuperando el CUFE."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Documento emitido; recuperando sus datos para el CAFE."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid ""
+"Documento validado por Factura Fácil S.A. con RUC 155723374-2-2022,\n"
+"                        es Proveedor Autorizado Calificado, Resolución No. 201-2167 de 14/03/2023."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__02
+msgid "Efectivo"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_config.py:0
+msgid "El agente"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "El agente no responde (%s). La factura no se envió; se reintenta sola."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "El estado de la factura electrónica no se edita a mano."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid ""
+"El último envío fue hace menos de %s segundos y puede seguir en curso. "
+"Espera y vuelve a revisar."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "Envío de la factura sin confirmar"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__ff_fe_document__fe_estado__incierta
+msgid "Envío incierto"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid ""
+"Envío incierto (%(d)s): el agente pudo haber creado el documento sin "
+"confirmarlo. NO se reenvia solo, para no duplicar la factura en la DGI. "
+"Buscalo en el agente por SystemRef %(ref)s: si existe, pega su UUID en la "
+"orden y pulsa Reintentar; si no, usa 'Forzar reenvío'."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__ff_fe_document__fe_estado__error
+msgid "Error"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_order.py:0
+msgid "Esta orden no tiene documento de factura electrónica."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_order.py:0
+msgid "Esta orden no tiene el PDF oficial del CAFE."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_estado
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_estado
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_search_ff
+msgid "Estado FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Estado: %(estado)s. %(err)s"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Estado: %(estado)s. CUFE: %(cufe)s"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid ""
+"Esto emite un documento NUEVO en la DGI. Hazlo solo si verificaste en el "
+"agente que el documento de esta orden NO existe; si existe, quedara la "
+"factura duplicada. ¿Continuar?"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__res_partner__ff_receptor_type__04
+msgid "Extranjero"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_search_ff
+msgid "FE Autorizada"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_search_ff
+msgid "FE Pendiente autorización"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_search_ff
+msgid "FE Rechazada / Error / Incierta"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "FECHA DOC. AFECTADO:"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "FECHA:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.actions.server,name:ff_pos_agent.ir_cron_ff_update_status_ir_actions_server
+msgid "FF: actualizar estado DGI de documentos firmados"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Factura Electrónica"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid "Factura Electrónica (Factura Fácil)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_partner_form_ff
+msgid "Factura Electrónica (Panamá)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.res_config_settings_view_form_ff
+msgid "Factura Fácil (FE Panamá)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "Factura RECHAZADA por la DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_agent_enabled
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_agent_enabled
+msgid "Factura electrónica (Factura Fácil)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "Factura electrónica AUTORIZADA por la DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "Factura electrónica timbrada correctamente"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "Factura pendiente de timbrar"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.res_config_settings_view_form_ff
+msgid ""
+"Facturación electrónica DGI con Factura Fácil: por el Agente Offline de la "
+"tienda o por su API en línea"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/backend/ff_ruc_validator.js:0
+msgid "Fallo inesperado al validar el RUC."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_online
+msgid "Fe Online"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.actions.act_window,help:ff_pos_agent.action_pos_order_fe_monitor
+msgid ""
+"Filtra por rechazadas, pendientes de autorización o autorizadas por la DGI."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_payment_method__ff_payment_type
+msgid "Forma de pago DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "Formato no reconocido - lo decide la DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid "Forzar reenvío"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__res_partner__ff_receptor_type__03
+msgid "Gobierno"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "Gobierno / no tributario (NT)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_config.py:0
+msgid "HTTP %s"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "HTTP %s sin document_uuid"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__id
+msgid "ID"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "ITBMS"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_partner_form_ff
+msgid "Identificación DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_print_cafe
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_print_cafe
+msgid "Imprimir CAFE en el agente"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "Información adicional"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_credit_installments
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_credit_installments
+msgid "Informar cuotas de crédito"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "Ingresa el RUC / cédula antes de validar."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__res_partner__ff_ruc_type__2
+msgid "Jurídico"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_config.py:0
+msgid "La API de Factura Fácil"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "La DGI no reconoce el RUC %s."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "La DGI rechazó la consulta: %s"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_credit_installments
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_credit_installments
+msgid ""
+"Lo cobrado a cuenta de cliente se informa como venta a plazo con su cuota "
+"(payment_term 2/3 + installments), como pide el contrato del agente. "
+"Desactivado: se informa como pago 'Crédito' al contado. El agente probado "
+"(2026-09) falla con cuotas (HTTP 500, NameError en generators.py:344); "
+"activarlo solo cuando Factura Fácil lo corrija."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "MONTO"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_mode
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_mode
+msgid "Modo de emisión"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.actions.act_window,name:ff_pos_agent.action_pos_order_fe_monitor
+#: model:ir.ui.menu,name:ff_pos_agent.menu_pos_order_fe_monitor
+msgid "Monitor Factura Electrónica"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__res_partner__ff_ruc_type__1
+msgid "Natural"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid ""
+"No hay un POS configurado con Factura Fácil (URL + API Key). Configuralo en "
+"Ajustes del Punto de Venta."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "No reintentes: avisa a un supervisor (Monitor Factura Electrónica)."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid ""
+"No se pudo contactar Factura Fácil en %s. Revisa la conexión y volvé a "
+"intentar."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "No se pudo timbrar la factura"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_order.py:0
+msgid ""
+"No se puede emitir: '%(linea)s' descuenta %(monto).2f pero las ventas con "
+"ITBMS %(pct)s%% suman %(total).2f."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_order.py:0
+msgid ""
+"Nota de crédito sin documento de origen timbrado: la orden devuelta no tiene"
+" CUFE ni número fiscal, la DGI la rechazaría."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_nro_dgi
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_nro_dgi
+msgid "Nro. Documento FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_confirmacion
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_confirmacion
+msgid "Nro. confirmación"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "O escaneando el código QR"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__pos_order_id
+msgid "Orden POS"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__99
+msgid "Otro"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid ""
+"Otro proceso está enviando este documento al agente. Intenta de nuevo en "
+"unos segundos."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_request_json
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_request_json
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid "Payload enviado al agente"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__ff_fe_document__fe_estado__pendiente
+msgid "Pendiente"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "Persona jurídica (folio / ficha)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "Persona natural (cédula)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_pos_order
+msgid "Point of Sale Orders"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_pos_payment_method
+msgid "Point of Sale Payment Methods"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.res_config_settings_view_form_ff
+msgid "Probar conexión"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_config__ff_environment__1
+msgid "Producción"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_product_template
+msgid "Product"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model,name:ff_pos_agent.model_uom_uom
+msgid "Product Unit of Measure"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_protocolo
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_protocolo
+msgid "Protocolo autorización"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "Protocolo de autorización:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_config__ff_environment__2
+msgid "Pruebas"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__10
+msgid "Punto de venta"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_qr_base64
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_qr_base64
+msgid "QR (base64)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "RECEPTOR:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_ruc
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_ruc
+msgid "RUC / Cédula"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "RUC no válido"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_res_partner__ff_ruc
+#: model:ir.model.fields,help:ff_pos_agent.field_res_users__ff_ruc
+msgid "RUC o cédula del receptor (DGI)."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_ruc_validated
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_ruc_validated
+msgid "RUC validado"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "RUC válido"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "RUC:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_razon_social
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_razon_social
+msgid "Razón social (DGI)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__ff_fe_document__fe_estado__rechazada
+msgid "Rechazada DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Rechazado por la DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_ff_fe_document__name
+msgid "Referencia del documento en el agente (header.id)."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid "Reintentar / actualizar FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "Reintentar timbrado FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_response_json
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_response_json
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid "Respuesta del agente"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/res_partner.py:0
+msgid "Respuesta inválida de Factura Fácil al validar el RUC (HTTP %s): %s"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "SUBTOTAL"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "SUCURSAL:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_print_cafe
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_print_cafe
+msgid ""
+"Si está activo, tras timbrar se llama a printByCufe y el Agente de Factura "
+"Fácil imprime el CAFE en su propia impresora. Dejarlo desactivado si el CAFE"
+" se imprime desde el recibo del POS."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_partner_form_ff
+msgid ""
+"Sin RUC el cliente se factura como <b>consumidor final</b>. Al escribir\n"
+"                        el RUC se deduce el tipo por su estructura (cédula = natural,\n"
+"                        folio/ficha = jurídica, <b>NT</b> = gobierno); el DV y la razón social\n"
+"                        los confirma la DGI al validar."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid ""
+"Solo se puede forzar el reenvío de un documento con envío incierto y sin "
+"documento vinculado."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Solo se puede vincular un documento del agente a un envío incierto."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "Solo un responsable del Punto de Venta puede forzar el reenvío."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__name
+msgid "SystemRef"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "SystemRef:"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "TOT. DSCTO."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "TOTAL"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__03
+msgid "Tarjeta de crédito"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__04
+msgid "Tarjeta de débito"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__05
+msgid "Tarjeta de fidelidad"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__07
+msgid "Tarjeta de regalo"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__ff_fe_document__fe_estado__timbrada
+msgid "Timbrada (firmada)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_ruc_type
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_ruc_type
+msgid "Tipo de RUC"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_res_partner__ff_receptor_type
+#: model:ir.model.fields,help:ff_pos_agent.field_res_users__ff_receptor_type
+msgid "Tipo de receptor para la Factura Electrónica (DGI Panamá)."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_res_partner__ff_ruc_hint
+#: model:ir.model.fields,help:ff_pos_agent.field_res_users__ff_ruc_hint
+msgid ""
+"Tipo deducido de la estructura del RUC (heurística local). La DGI lo "
+"confirma al validar."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_partner__ff_receptor_type
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_users__ff_receptor_type
+msgid "Tipo receptor FE"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__08
+msgid "Transferencia o depósito"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_qr_url
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_qr_url
+msgid "URL consulta DGI (QR)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_config__ff_base_url
+#: model:ir.model.fields,field_description:ff_pos_agent.field_res_config_settings__pos_ff_base_url
+msgid "URL de Factura Fácil"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_company_uuid
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_company_uuid
+msgid "UUID de la empresa en Factura Fácil."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_document_uuid
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_document_uuid
+msgid "UUID documento (agente)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.constraint,message:ff_pos_agent.constraint_ff_fe_document_pos_order_uniq
+msgid "Una orden POS tiene un solo documento FE."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_uom_uom__ff_dgi_code
+msgid ""
+"Unidad de medida en el catálogo de la DGI para la factura electrónica (p. "
+"ej. 'und', 'kg'). Vacío = 'und'. OJO: el nombre de la unidad en Odoo no "
+"sirve (está traducido y la DGI lo rechaza con el error 2002)."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "VUELTO"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields.selection,name:ff_pos_agent.selection__pos_payment_method__ff_payment_type__06
+msgid "Vale"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_partner_form_ff
+msgid "Validación con la DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/backend/ff_ruc_validator.xml:0
+msgid "Validar RUC con la DGI"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.view_pos_order_form_ff
+msgid "Ver CAFE oficial"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/receipt_screen.xml:0
+msgid "Ver CAFE oficial (PDF)"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/pos_config.py:0
+msgid "credenciales rechazadas (HTTP %s)"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_branch_code
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_branch_code
+msgid "header.branch.code - sucursal emisora configurada en el agente."
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,help:ff_pos_agent.field_pos_config__ff_pos_code
+#: model:ir.model.fields,help:ff_pos_agent.field_res_config_settings__pos_ff_pos_code
+msgid "header.pos - debe existir como PointOfSale en el agente."
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-python
+#: code:addons/ff_pos_agent/models/ff_fe_document.py:0
+msgid "se interrumpió el envío antes de la respuesta del agente"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.product_uom_categ_form_view_ff
+#: model_terms:ir.ui.view,arch_db:ff_pos_agent.product_uom_form_view_ff
+msgid "und"
+msgstr ""
+
+#. module: ff_pos_agent
+#. odoo-javascript
+#: code:addons/ff_pos_agent/static/src/xml/order_receipt.xml:0
+msgid "usando el CUFE:"
+msgstr ""
+
+#. module: ff_pos_agent
+#: model:ir.model.fields,field_description:ff_pos_agent.field_ff_fe_document__fe_request_date
+#: model:ir.model.fields,field_description:ff_pos_agent.field_pos_order__fe_request_date
+msgid "Último envío al agente"
+msgstr ""

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form_ff" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ff.pos.agent</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="point_of_sale.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block id="pos_interface_section" position="inside">
+                <setting string="Factura Fácil (FE Panamá)"
+                         help="Facturación electrónica DGI con Factura Fácil: por el Agente Offline de la tienda o por su API en línea">
+                    <field name="pos_ff_agent_enabled"/>
+                    <div class="content-group mt16"
+                         invisible="not pos_ff_agent_enabled">
+                        <div class="row mt8">
+                            <label for="pos_ff_mode" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_mode" widget="radio" options="{'horizontal': true}"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="pos_ff_base_url" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_base_url"/>
+                        </div>
+                        <!-- El modo "agente en la caja" tiene requisitos que no
+                             se pueden comprobar desde el servidor: se avisan. -->
+                        <div class="alert alert-warning mt8" role="alert"
+                             invisible="pos_ff_mode != 'agent_local'">
+                            <p class="mb-1"><b>El agente lo llama el navegador de cada caja.</b>
+                            La URL es la de esa máquina (127.0.0.1), no la del servidor,
+                            y el botón "Probar conexión" de abajo <b>no sirve aquí</b>:
+                            prueba desde el servidor, que no alcanza esa dirección.</p>
+                            <p class="mb-1">Requiere en cada caja:</p>
+                            <ul class="mb-1">
+                                <li>Chrome, Edge o Brave <b>142 o superior</b> (Firefox y iOS no sirven)</li>
+                                <li>Parámetro de sistema <code>point_of_sale.use_lna</code> = <code>1</code></li>
+                                <li>Que el agente permita el dominio de Odoo por <b>CORS</b></li>
+                            </ul>
+                            <p class="mb-0">La API Key se carga en el navegador de la caja:
+                            queda al alcance de quien tenga acceso a esa máquina.</p>
+                        </div>
+                        
+                        <div class="row mt8" invisible="pos_ff_mode == 'agent_local'">
+                            <div class="col-lg-4"/>
+                            <button name="action_ff_test_connection" type="object"
+                                    string="Probar conexión" icon="fa-plug"
+                                    class="btn-link w-auto"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="pos_ff_environment" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_environment"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="pos_ff_company_uuid" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_company_uuid"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="pos_ff_api_key" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_api_key" password="True"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="pos_ff_branch_code" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_branch_code"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="pos_ff_pos_code" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_pos_code"/>
+                        </div>
+                        <!-- En linea no hay impresora del agente: el CAFE sale con el
+                             recibo de Odoo y el PDF oficial queda adjunto a la orden. -->
+                        <div class="mt8 d-flex align-items-center gap-2" invisible="pos_ff_mode == 'online'">
+                            <field name="pos_ff_print_cafe" class="w-auto"/>
+                            <label for="pos_ff_print_cafe" class="o_light_label mb-0"/>
+                        </div>
+                        <div class="mt8 d-flex align-items-center gap-2">
+                            <field name="pos_ff_credit_installments" class="w-auto"/>
+                            <label for="pos_ff_credit_installments" class="o_light_label mb-0"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="pos_ff_codigo_gns" class="col-lg-4 o_light_label"/>
+                            <field name="pos_ff_codigo_gns"/>
+                        </div>
+                    </div>
+                </setting>
+            </block>
+        </field>
+    </record>
+
+    <record id="res_config_settings_view_form_ff_account" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ff.account</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <block id="invoicing_settings" position="inside">
+                <setting string="Factura Fácil (FE Panamá)"
+                         help="Emite las facturas de Contabilidad ante la DGI con Factura Fácil. El Punto de Venta se configura aparte, en los ajustes del POS.">
+                    <field name="ff_inv_enabled"/>
+                    <div class="content-group mt16" invisible="not ff_inv_enabled">
+                        <div class="mt8 d-flex align-items-center gap-2">
+                            <field name="ff_inv_auto_emit" class="w-auto"/>
+                            <label for="ff_inv_auto_emit" class="o_light_label mb-0"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="ff_inv_mode" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_mode" widget="radio" options="{'horizontal': true}"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="ff_inv_base_url" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_base_url"/>
+                        </div>
+                        <div class="row mt8">
+                            <div class="col-lg-4"/>
+                            <button name="action_ff_inv_test_connection" type="object"
+                                    string="Probar conexión" icon="fa-plug"
+                                    class="btn-link w-auto"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="ff_inv_environment" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_environment"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="ff_inv_company_uuid" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_company_uuid"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="ff_inv_api_key" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_api_key" password="True"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="ff_inv_branch_code" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_branch_code"/>
+                        </div>
+                        <!-- OJO: distinto al de las cajas. Factura Facil numera por
+                             punto de venta; compartirlo choca los correlativos. -->
+                        <div class="row mt8">
+                            <label for="ff_inv_pos_code" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_pos_code"/>
+                        </div>
+                        <div class="mt8 d-flex align-items-center gap-2" invisible="ff_inv_mode == 'online'">
+                            <field name="ff_inv_print_cafe" class="w-auto"/>
+                            <label for="ff_inv_print_cafe" class="o_light_label mb-0"/>
+                        </div>
+                        <div class="mt8 d-flex align-items-center gap-2">
+                            <field name="ff_inv_credit_installments" class="w-auto"/>
+                            <label for="ff_inv_credit_installments" class="o_light_label mb-0"/>
+                        </div>
+                        <div class="row mt8">
+                            <label for="ff_inv_codigo_gns" class="col-lg-4 o_light_label"/>
+                            <field name="ff_inv_codigo_gns"/>
+                        </div>
+                    </div>
+                </setting>
+            </block>
+        </field>
+    </record>
+</odoo>
