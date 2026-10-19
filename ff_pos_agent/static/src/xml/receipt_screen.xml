@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ff_pos_agent.ReceiptScreenFE"
+       t-inherit="point_of_sale.ReceiptScreen"
+       t-inherit-mode="extension">
+        <xpath expr="//div[@id='action_btn_desktop']" position="before">
+            <div t-if="pos.config.ff_agent_enabled and currentOrder.fe_estado"
+                 class="ff-fe-status w-100 p-2 mb-2 text-center rounded"
+                 t-att-class="{
+                     'bg-success-subtle text-success': currentOrder.fe_estado === 'autorizada' || currentOrder.fe_estado === 'timbrada',
+                     'bg-danger-subtle text-danger': currentOrder.fe_estado === 'rechazada' || currentOrder.fe_estado === 'error',
+                     'bg-warning-subtle text-warning': currentOrder.fe_estado === 'pendiente' || currentOrder.fe_estado === 'incierta'
+                 }">
+                <!-- ÉXITO: firmada / autorizada -->
+                <t t-if="currentOrder.fe_estado === 'autorizada' || currentOrder.fe_estado === 'timbrada'">
+                    <div style="font-weight:bold;">
+                        <i class="fa fa-check-circle me-1"/>
+                        <t t-if="currentOrder.fe_estado === 'autorizada'">Factura electrónica AUTORIZADA por la DGI</t>
+                        <t t-else="">Factura electrónica timbrada correctamente</t>
+                    </div>
+                    <div t-if="currentOrder.fe_cufe" style="font-size:11px; word-break:break-all;">
+                        CUFE: <t t-esc="currentOrder.fe_cufe"/>
+                    </div>
+                    <!-- API en linea: el PDF oficial del CAFE, adjunto a la orden -->
+                    <a t-if="currentOrder.fe_cafe_url" t-att-href="currentOrder.fe_cafe_url" target="_blank"
+                       class="btn btn-link btn-sm mt-1 p-0">
+                        <i class="fa fa-file-pdf-o me-1"/>Ver CAFE oficial (PDF)
+                    </a>
+                    <!-- Con la impresion en el agente activa, el recibo de Odoo
+                         NO sale solo: el CAFE ya salio por la impresora del
+                         agente y mandar ademas el PDF es un paso de mas. Se
+                         dejan las dos acciones a mano, por si hacen falta. -->
+                    <div t-if="pos.config.ff_print_cafe" class="d-flex gap-2 mt-2">
+                        <button class="button btn btn-secondary btn-sm flex-fill"
+                                t-on-click="imprimirReciboOdoo">
+                            <i class="fa fa-print me-1"/>Imprimir recibo (Odoo)
+                        </button>
+                        <button class="button btn btn-secondary btn-sm flex-fill"
+                                t-on-click="reimprimirCafe">
+                            <i class="fa fa-refresh me-1"/>Reimprimir FE
+                        </button>
+                    </div>
+                    <!-- La descarga automatica de la factura se suprimio: queda
+                         a un clic para quien la necesite. -->
+                    <button t-if="pos.config.ff_print_cafe and ffFacturaId"
+                            class="button btn btn-link btn-sm mt-1 p-0"
+                            t-on-click="verFacturaPdf">
+                        <i class="fa fa-file-text-o me-1"/>Ver factura de Odoo (PDF)
+                    </button>
+                    <!-- Si el agente no llego a imprimir, se avisa: el cliente
+                         se queda sin comprobante si nadie hace nada. -->
+                    <!-- `!`, no `not`: Owl solo traduce and/or/gt/gte/lt/lte
+                         (WORD_REPLACEMENT en owl.js). `not` se compila como un
+                         identificador y la plantilla ENTERA deja de compilar. -->
+                    <div t-if="pos.config.ff_print_cafe and !ffImpreso"
+                         class="mt-1" style="font-size:11px;">
+                        El agente no confirmó la impresión del CAFE.
+                    </div>
+                </t>
+                <!-- FALLO: pendiente / error / rechazada -> mostrar motivo + reintentar -->
+                <t t-else="">
+                    <div style="font-weight:bold;">
+                        <i class="fa fa-exclamation-triangle me-1"/>
+                        <t t-if="currentOrder.fe_estado === 'rechazada'">Factura RECHAZADA por la DGI</t>
+                        <t t-elif="currentOrder.fe_estado === 'error'">No se pudo timbrar la factura</t>
+                        <t t-elif="currentOrder.fe_estado === 'incierta'">Envío de la factura sin confirmar</t>
+                        <t t-else="">Factura pendiente de timbrar</t>
+                    </div>
+                    <div t-if="currentOrder.fe_error" style="font-size:11px; word-break:break-word;">
+                        <t t-esc="currentOrder.fe_error"/>
+                    </div>
+                    <!-- Incierta: reintentar podría duplicar la factura en la
+                         DGI; lo resuelve un supervisor desde el Monitor FE. -->
+                    <div t-if="currentOrder.fe_estado === 'incierta'" class="mt-2" style="font-weight:bold;">
+                        No reintentes: avisa a un supervisor (Monitor Factura Electrónica).
+                    </div>
+                    <button t-else="" class="button btn btn-warning btn-lg w-100 py-3 mt-2"
+                            t-on-click="retryFe">
+                        <i class="fa fa-refresh me-1"/>Reintentar timbrado FE
+                    </button>
+                </t>
+            </div>
+        </xpath>
+    </t>
+
+</templates>
